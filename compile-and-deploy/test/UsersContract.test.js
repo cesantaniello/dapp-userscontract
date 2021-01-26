@@ -22,4 +22,26 @@ describe('The UserContract', async() => {
         console.log(usersContract.options.address);
         assert.ok(usersContract.options.address);
     });
+
+    it('should join a user', async () => {
+        let name = "Carlos";
+        let surname = "Santaniello";
+
+        await usersContract.methods.join(name, surname)
+            .send({from: accounts[0], gas: '500000'});
+    });
+
+    it('should retrieve a user', async() => {
+        let name = "Carlos";
+        let surname = "Santaniello";
+
+        await usersContract.methods.join(name, surname)
+            .send({from: accounts[0], gas: '500000'});
+
+        let user = await usersContract.methods.getUser(accounts[0]).call();
+
+        assert.equal(name, user[0]);
+        assert.equal(surname, user[1]);
+    });
+
 });
