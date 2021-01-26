@@ -60,4 +60,18 @@ describe('The UserContract', async() => {
             }
         }
     });
+
+    it('should not allow retrieving a not registered user', async () => {
+
+        try {
+            await usersContract.methods.getUser(accounts[0]).call();
+            assert.fail('user should not be registered');
+        }
+        catch (e) {
+            if (e instanceof AssertionError) {
+                assert.fail(e.message);
+            }
+        }
+    });
+
 });
